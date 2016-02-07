@@ -39,7 +39,7 @@ Sample Configuration
         doctrine_mongodb:
             connections:
                 default:
-                    server: %mongodb_server%
+                    server: "%mongodb_server%"
 
 If you wish to use memcache to cache your metadata, you need to configure the
 ``Memcache`` instance; for example, you can do the following:
@@ -157,7 +157,7 @@ The following configuration shows a bunch of mapping examples:
                         alias: BundleAlias
                     doctrine_extensions:
                         type: xml
-                        dir: %kernel.root_dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Documents
+                        dir: "%kernel.root_dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Documents"
                         prefix: DoctrineExtensions\Documents\
                         alias: DExt
 
@@ -306,15 +306,13 @@ It is possible to connect to several mongodb servers on one connection if
 you are using a replica set by listing all of the servers within the connection
 string as a comma separated list.
 
-.. configuration-block::
+.. code-block:: yaml
 
-    .. code-block:: yaml
-
-        doctrine_mongodb:
-            # ...
-            connections:
-                default:
-                    server: 'mongodb://mongodb-01:27017,mongodb-02:27017,mongodb-03:27017'
+    doctrine_mongodb:
+        # ...
+        connections:
+            default:
+                server: "mongodb://mongodb-01:27017,mongodb-02:27017,mongodb-03:27017"
 
 Where mongodb-01, mongodb-02 and mongodb-03 are the machine hostnames. You
 can also use IP addresses if you prefer.
@@ -334,58 +332,56 @@ These options default to zero, which means that no operations will be retried.
 Full Default Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. configuration-block::
+.. code-block:: yaml
 
-    .. code-block:: yaml
+    doctrine_mongodb:
+        document_managers:
 
-        doctrine_mongodb:
-            document_managers:
+            # Prototype
+            id:
+                connection:                 ~
+                database:                   ~
+                default_repository_class:   Doctrine\ODM\MongoDB\DocumentRepository
+                repository_factory:         ~
+                logging:                    true
+                auto_mapping:               false
+                retry_connect:              0
+                retry_query:                0
+                metadata_cache_driver:
+                    type:                 ~
+                    class:                ~
+                    host:                 ~
+                    port:                 ~
+                    instance_class:       ~
+                mappings:
 
-                # Prototype
-                id:
-                    connection:                 ~
-                    database:                   ~
-                    default_repository_class:   Doctrine\ODM\MongoDB\DocumentRepository
-                    repository_factory:         ~
-                    logging:                    true
-                    auto_mapping:               false
-                    retry_connect:              0
-                    retry_query:                0
-                    metadata_cache_driver:
+                    # Prototype
+                    name:
+                        mapping:              true
                         type:                 ~
-                        class:                ~
-                        host:                 ~
-                        port:                 ~
-                        instance_class:       ~
-                    mappings:
+                        dir:                  ~
+                        prefix:               ~
+                        alias:                ~
+                        is_bundle:            ~
+        connections:
 
-                        # Prototype
-                        name:
-                            mapping:              true
-                            type:                 ~
-                            dir:                  ~
-                            prefix:               ~
-                            alias:                ~
-                            is_bundle:            ~
-            connections:
-
-                # Prototype
-                id:
-                    server:               ~
-                    options:
-                        connect:              ~
-                        persist:              ~
-                        timeout:              ~
-                        replicaSet:           ~
-                        username:             ~
-                        password:             ~
-                        db:                   ~
-            proxy_namespace:      MongoDBODMProxies
-            proxy_dir:            %kernel.cache_dir%/doctrine/odm/mongodb/Proxies
-            auto_generate_proxy_classes:  false
-            hydrator_namespace:   Hydrators
-            hydrator_dir:         %kernel.cache_dir%/doctrine/odm/mongodb/Hydrators
-            auto_generate_hydrator_classes:  false
-            default_document_manager:  ~
-            default_connection:   ~
-            default_database:     default
+            # Prototype
+            id:
+                server:               ~
+                options:
+                    connect:              ~
+                    persist:              ~
+                    timeout:              ~
+                    replicaSet:           ~
+                    username:             ~
+                    password:             ~
+                    db:                   ~
+        proxy_namespace:      MongoDBODMProxies
+        proxy_dir:            "%kernel.cache_dir%/doctrine/odm/mongodb/Proxies"
+        auto_generate_proxy_classes:  false
+        hydrator_namespace:   Hydrators
+        hydrator_dir:         "%kernel.cache_dir%/doctrine/odm/mongodb/Hydrators"
+        auto_generate_hydrator_classes:  false
+        default_document_manager:  ~
+        default_connection:   ~
+        default_database:     default
